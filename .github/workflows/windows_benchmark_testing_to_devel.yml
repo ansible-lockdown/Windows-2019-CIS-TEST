@@ -160,4 +160,4 @@ jobs:
           # Copy precommit 
             - name: Copy precommit config to root repository
               run: |
-                cp ".github/workflows/github_windows_IaC/workflows/.pre-commit-config.yaml" .pre-commit-config.yaml
+                cp "/home/runner/work/Windows-2019-CIS-TEST/Windows-2019-CIS-TEST/.github/workflows/github_windows_IaC"* /home/runner/work/Windows-2019-CIS-TEST/Windows-2019-CIS-TEST
