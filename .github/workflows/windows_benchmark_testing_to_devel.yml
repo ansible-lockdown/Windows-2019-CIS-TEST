@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: windows_testing_pipeline_to_devel1
+name: windows_testing_pipeline_to_devel
 
 # Controls when the action will run.
 # Triggers the workflow on push or pull request
