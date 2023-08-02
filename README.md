@@ -1,4 +1,4 @@
-# Windows 2019 CIS Test
+# Windows 2019 CIS Test 2
 
 ## Configure a Windows 2019 machine to be [CIS](https://www.cisecurity.org/cis-benchmarks/) compliant
 
