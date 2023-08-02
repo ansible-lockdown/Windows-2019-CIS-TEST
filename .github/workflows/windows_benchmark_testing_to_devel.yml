@@ -143,11 +143,6 @@ jobs:
             # Imported as a variable by terraform.
             TF_VAR_repository: ${{ github.event.repository.name }}
 
-        defaults:
-          run:
-            shell: bash
-            working-directory: .github/workflows/github_windows_IaC/workflows/
-
         steps:
           # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it.
             - name: Clone ${{ github.event.repository.name }}
@@ -165,4 +160,4 @@ jobs:
           # Copy precommit 
             - name: Copy precommit config to root repository
               run: |
-                cp .github/workflows/github_windows_IaC/workflows/.pre-commit-config.yaml .github
+                cp /.github/workflows/github_windows_IaC/workflows/.pre-commit-config.yaml .pre-commit-config.yaml
