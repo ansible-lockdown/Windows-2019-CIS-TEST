@@ -20,10 +20,9 @@ on:  # yamllint disable-line rule:truthy
 # A workflow run is made up of one or more jobs
 # that can run sequentially or in parallel
 jobs:
-  # This will create messages for first time contributers and direct them to the Discord server
+    # This will create messages for first time contributers and direct them to the Discord server
     welcome:
         runs-on: ubuntu-latest
-
         steps:
             - uses: actions/first-interaction@main
               with:
@@ -130,10 +129,40 @@ jobs:
                   ANSIBLE_DEPRECATION_WARNINGS: "false"
 
       # Remove test system
-
             - name: Terraform_Destroy
               if: always() && env.ENABLE_DEBUG == 'false'
               env:
                 OSVAR: ${{ vars.OSVAR }}
                 TF_VAR_benchmark_type: ${{ vars.BENCHMARK_TYPE }}
               run: terraform destroy -var-file "${OSVAR}.tfvars" --auto-approve
+
+    precommit:
+        runs-on: ubuntu-latest
+        env:
+            ENABLE_DEBUG: false
+            # Imported as a variable by terraform.
+            TF_VAR_repository: ${{ github.event.repository.name }}
+
+        defaults:
+          run:
+            shell: bash
+            working-directory: .github/workflows/github_windows_IaC/workflows/
+
+        steps:
+          # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it.
+            - name: Clone ${{ github.event.repository.name }}
+              uses: actions/checkout@v3
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+
+          # Pull in terraform code for linux servers
+            - name: Clone github IaC plan
+              uses: actions/checkout@v3
+              with:
+                repository: ansible-lockdown/github_windows_IaC
+                path: .github/workflows/github_windows_IaC
+
+          # Copy precommit 
+            - name: Copy precommit config to root repository
+              run: |
+                cp .github/workflows/github_windows_IaC/workflows/.pre-commit-config.yaml .github
